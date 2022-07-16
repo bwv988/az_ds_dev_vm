@@ -109,7 +109,7 @@ resource "tls_private_key" "example_ssh" {
 
 # Create virtual machine
 resource "azurerm_linux_virtual_machine" "myterraformvm" {
-  name                  = "azure_ds_dev_vm"
+  name                  = "virgo"
   location              = azurerm_resource_group.rg.location
   resource_group_name   = azurerm_resource_group.rg.name
   network_interface_ids = [azurerm_network_interface.myterraformnic.id]
@@ -128,7 +128,7 @@ resource "azurerm_linux_virtual_machine" "myterraformvm" {
     version   = "latest"
   }
 
-  computer_name                   = "azure_ds_dev_vm"
+  computer_name                   = "virgo"
   admin_username                  = "sral"
   disable_password_authentication = true
 
