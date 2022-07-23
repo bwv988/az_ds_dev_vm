@@ -1,3 +1,5 @@
+# Main Terraform file.
+
 resource "random_pet" "rg-name" {
   prefix    = var.resource_group_name_prefix
 }
@@ -109,23 +111,24 @@ resource "tls_private_key" "example_ssh" {
 
 # Create virtual machine
 resource "azurerm_linux_virtual_machine" "myterraformvm" {
-  name                  = "virgo"
-  location              = azurerm_resource_group.rg.location
-  resource_group_name   = azurerm_resource_group.rg.name
-  network_interface_ids = [azurerm_network_interface.myterraformnic.id]
-  size                  = "Standard_D2as_v5"
+  name                    = "virgo"
+  location                = azurerm_resource_group.rg.location
+  resource_group_name     = azurerm_resource_group.rg.name
+  network_interface_ids   = [azurerm_network_interface.myterraformnic.id]
+  size                    = var.vm_size
+  custom_data             = filebase64("scripts/install.sh")
 
   os_disk {
-    name                 = "myOsDisk"
-    caching              = "ReadWrite"
-    storage_account_type = "Premium_LRS"
+    name                  = "myOsDisk"
+    caching               = "ReadWrite"
+    storage_account_type  = "Standard_LRS"
   }
 
   source_image_reference {
-    publisher = "canonical"
-    offer     = "0001-com-ubuntu-server-focal"
-    sku       = "20_04-lts-gen2"
-    version   = "latest"
+    publisher             = "canonical"
+    offer                 = "0001-com-ubuntu-server-focal"
+    sku                   = "20_04-lts-gen2"
+    version               = "latest"
   }
 
   computer_name                   = "virgo"
@@ -133,11 +136,13 @@ resource "azurerm_linux_virtual_machine" "myterraformvm" {
   disable_password_authentication = true
 
   admin_ssh_key {
-    username   = "sral"
-    public_key = tls_private_key.example_ssh.public_key_openssh
+    username              = "sral"
+    # public_key = tls_private_key.example_ssh.public_key_openssh
+    # Using my own SSH key.    
+    public_key            = file("~/.ssh/id_rsa.pub")    
   }
 
   boot_diagnostics {
-    storage_account_uri = azurerm_storage_account.mystorageaccount.primary_blob_endpoint
+    storage_account_uri   = azurerm_storage_account.mystorageaccount.primary_blob_endpoint
   }
 }
