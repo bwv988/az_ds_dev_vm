@@ -1,12 +1,12 @@
-# az_ds_dev_vm
+# Azure Data Science development VM
 
 Terraform scripts to spool up a Data Science dev box in Azure.
 
 ## Prerequisites
 
-Terraform and AZ CLI installed.
-
-If this is run from within WSL2, DNS needs to be disabled.
+* Terraform and Azure CLI installed
+* If this is run from within WSL2, DNS needs to be disabled as there is currently an issue in conjunction with Terraform
+* The Terraform script assumes that an SSH key public key exists under `~/.ssh/id_rsa.pub`.
 
 ## Deploy the VM with Terraform
 ```bash
@@ -19,28 +19,26 @@ terraform apply "main.tfplan"
 terraform output public_ip_address
 
 # Sign in via SSH.
+
+ssh sral@<public ip address>
 ```
 
-## Additional installations
+## Usage
 
-### VM
-TODO: Add to provisioning script.
-
+### On the VM
+Run Jupyter lab:
 ```bash
-# Install JupyterLab.
-conda install jupyterlab ipywidgets
-
-
-# Install PyTorch.
-conda install pytorch torchvision torchaudio cpuonly -c pytorch
+jupyter lab
 ```
 
 ### Client
 On the client, open an SSH tunnel to connect to JupyterLab:
 
-```
+```bash
 ssh -N -L 8888:localhost:8888 {user]@{host}
 ```
+
+Then point your browser to https://localhost:8888
 
 ## Links
 
