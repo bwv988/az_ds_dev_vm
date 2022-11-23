@@ -4,7 +4,7 @@ FROM mcr.microsoft.com/devcontainers/base:bullseye
 COPY library-scripts/*.sh /tmp/library-scripts/
 
 # [Option] Install zsh
-ARG INSTALL_ZSH="true"
+# ARG INSTALL_ZSH="true"
 # [Option] Upgrade OS packages to their latest versions
 ARG UPGRADE_PACKAGES="true"
 
@@ -20,9 +20,10 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 # [Option] Install Azure CLI
 ARG INSTALL_AZURE_CLI="true"
 # [Option] Install Docker CLI
-ARG INSTALL_DOCKER="true"
+ARG INSTALL_DOCKER="false"
 # [Choice] Node.js version: none, lts/*, 16, 14, 12, 10
-ARG NODE_VERSION="lts/*"
+# ARG NODE_VERSION="lts/*"
+ARG NODE_VERSION="none"
 ENV NVM_DIR=/usr/local/share/nvm
 ENV NVM_SYMLINK_CURRENT=true \
     PATH=${NVM_DIR}/current/bin:${PATH}
@@ -36,7 +37,9 @@ RUN if [ "${INSTALL_AZURE_CLI}" = "true" ]; then bash /tmp/library-scripts/azcli
     && rm -rf /var/lib/apt/lists/*
 
 # Run my own customizations.
+USER vscode
 RUN bash /tmp/library-scripts/custom.sh
+USER root
 
 # Install Terraform, tflint, Terragrunt
 ARG TERRAFORM_VERSION=0.12.16
