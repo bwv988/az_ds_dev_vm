@@ -49,7 +49,7 @@ RUN bash /tmp/library-scripts/terraform-debian.sh "${TERRAFORM_VERSION}" "${TFLI
     && rm -rf /tmp/library-scripts
 
 USER vscode
-RUN bash /tmp/library-scripts/tf-postinstall.sh
+RUN bash /tmp/library-scripts/tfp.sh
 USER root
 
 ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
