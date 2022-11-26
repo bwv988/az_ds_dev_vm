@@ -47,11 +47,6 @@ ARG TFLINT_VERSION=0.8.2
 ARG TERRAGRUNT_VERSION=0.28.1
 RUN bash /tmp/library-scripts/terraform-debian.sh "${TERRAFORM_VERSION}" "${TFLINT_VERSION}" "${TERRAGRUNT_VERSION}"
 
-# Initialize Terraform.
-USER vscode
-RUN bash /tmp/library-scripts/tfp.sh
-USER root
-
 ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
 CMD [ "sleep", "infinity" ]
 
