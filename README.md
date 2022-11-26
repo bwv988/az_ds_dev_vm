@@ -10,6 +10,7 @@ Terraform scripts to spool up a Data Science dev box in Azure.
 
 ## Deploy the VM with Terraform
 ```bash
+az login
 terraform plan -out main.tfplan
 terraform apply "main.tfplan"
 
@@ -22,6 +23,9 @@ terraform output public_ip_address
 
 ssh sral@<public ip address>
 ```
+
+## TODO
+[ ] Use Codespaces encrypted secrets: https://docs.github.com/en/codespaces/managing-your-codespaces/managing-encrypted-secrets-for-your-codespaces
 
 ## Usage
 
