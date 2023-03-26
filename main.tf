@@ -127,7 +127,7 @@ resource "azurerm_linux_virtual_machine" "myterraformvm" {
   source_image_reference {
     publisher             = "canonical"
     offer                 = "0001-com-ubuntu-server-focal"
-    sku                   = "22_04-lts-gen2"
+    sku                   = "20_04-lts-gen2"
     version               = "latest"
   }
 
@@ -146,3 +146,17 @@ resource "azurerm_linux_virtual_machine" "myterraformvm" {
     storage_account_uri   = azurerm_storage_account.mystorageaccount.primary_blob_endpoint
   }
 }
+
+# Enable auto-shutdown.
+resource "azurerm_dev_test_global_vm_shutdown_schedule" "rg" {
+  virtual_machine_id = azurerm_linux_virtual_machine.myterraformvm.id
+  location           = azurerm_resource_group.rg.location
+  enabled            = true
+
+  daily_recurrence_time = "2100"
+  timezone              = "GMT Standard Time"
+
+  notification_settings {
+    enabled         = false 
+  }
+ }

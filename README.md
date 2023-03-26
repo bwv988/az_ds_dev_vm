@@ -45,6 +45,12 @@ ssh -N -L 8888:localhost:8888 {user]@{host}
 
 Then point your browser to https://localhost:8888
 
+## Cleanup
+
+```bash
+terraform apply -destroy
+```
+
 ## Links
 
 * Terraform instructions: https://docs.microsoft.com/en-us/azure/developer/terraform/create-linux-virtual-machine-with-infrastructure

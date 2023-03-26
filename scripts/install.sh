@@ -1,7 +1,9 @@
 #!/bin/bash
 # This is custom data script is executed via cloud-init.
+#
 # View logs:
 # tail -f /var/log/cloud-init-output.log
+# less /var/log/cloud-init-output.log
 
 # Change the username as needed.
 export THE_USER="sral"
@@ -30,12 +32,16 @@ export PATH="~/opt/conda/bin:$PATH"
 echo -e "\n\nexport PATH='~/opt/conda/bin:$PATH'" >> ~/.bashrc
 
 # Install required conda packages.
-
-conda create -n textgen
+conda create -n textgen -y
 conda activate textgen
-conda install torchvision torchaudio pytorch-cuda=11.7 git -c pytorch -c nvidia jupyterlab ipywidgets
-conda install -c huggingface transformers
 
+# ON GPU VMs:
+# conda install torchvision transformers torchaudio pytorch-cuda=11.7 git jupyterlab ipywidgets -c pytorch -c nvidia -y
+
+# ON CPU VMs:
+conda install pytorch transformers torchvision git jupyterlab ipywidgets torchaudio cpuonly -c pytorch -y 
+
+# Clone the web UI
 git clone https://github.com/oobabooga/text-generation-webui
 cd text-generation-webui
 pip install -r requirements.txt
