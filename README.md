@@ -10,6 +10,7 @@ Terraform scripts to spool up a Data Science dev box in Azure.
 
 ## Deploy the VM with Terraform
 ```bash
+terraform init
 az login
 terraform plan -out main.tfplan
 terraform apply "main.tfplan"
