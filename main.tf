@@ -127,7 +127,7 @@ resource "azurerm_linux_virtual_machine" "myterraformvm" {
   source_image_reference {
     publisher             = "canonical"
     offer                 = "0001-com-ubuntu-server-focal"
-    sku                   = "20_04-lts-gen2"
+    sku                   = "22_04-lts-gen2"
     version               = "latest"
   }
 

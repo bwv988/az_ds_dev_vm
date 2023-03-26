@@ -26,22 +26,29 @@ wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.
 
 export PATH="~/opt/conda/bin:$PATH"
 
-# Install required conda packages.
-conda install jupyterlab ipywidgets
-conda install pytorch torchvision torchaudio cpuonly -c pytorch
-pip install transformers==4.20.1
-
 # Add to the user's runtime path.
 echo -e "\n\nexport PATH='~/opt/conda/bin:$PATH'" >> ~/.bashrc
 
-# Run this code to kick-off downloading the BLOOM model.
-python - <<'NESTED'
-# We run this to download / cache the BLOOM model so it's available for later use.
-from transformers import pipeline
+# Install required conda packages.
 
-classifier = pipeline("sentiment-analysis", 
+conda create -n textgen
+conda activate textgen
+conda install torchvision torchaudio pytorch-cuda=11.7 git -c pytorch -c nvidia jupyterlab ipywidgets
+conda install -c huggingface transformers
+
+git clone https://github.com/oobabooga/text-generation-webui
+cd text-generation-webui
+pip install -r requirements.txt
+
+# Run this code to kick-off downloading the BLOOM model.
+# FIXME: Doesn't seem to work?
+#python - <<'NESTED'
+# We run this to download / cache the BLOOM model so it's available for later use.
+#from transformers import pipeline
+
+#classifier = pipeline("sentiment-analysis", 
                     model = "bigscience/bloom-1b3")
-NESTED
+#NESTED
 EOF
 
 echo -e "\nVM setup script COMPLETED."

@@ -14,7 +14,9 @@ variable "resource_group_location" {
 #
 # az vm list-sizes --location northeurope
 #
+# Standard_E8-2ads_v5 - 2 vCPUs, 64GB RAM.
 variable "vm_size" {
-  default       = "Standard_D2s_v3"
+  #default       = "Standard_D2s_v3"
+  default = "Standard_E8-2ads_v5"
   description   = "VM size to deploy."
 }
