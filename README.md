@@ -1,6 +1,6 @@
-# Azure Data Science development VM
+# Azure AI / Data Science VM
 
-Terraform scripts to spool up a Data Science dev box in Azure.
+Terraform scripts to spool up an AI /  Data Science dev box in Azure.
 
 ## Prerequisites
 
@@ -30,6 +30,12 @@ ssh sral@<public ip address>
 
 ## Usage
 
+### Check installation status
+
+```bash
+less /var/log/cloud-init-output.log
+```
+
 ### On the VM
 Run Jupyter lab:
 ```bash
@@ -45,7 +51,7 @@ ssh -N -L 8888:localhost:8888 {user]@{host}
 
 Then point your browser to https://localhost:8888
 
-## Cleanup
+### Cleanup
 
 ```bash
 terraform apply -destroy
