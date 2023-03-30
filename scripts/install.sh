@@ -56,6 +56,7 @@ cd $HOME
 mkdir git
 cd git
 git clone https://github.com/bwv988/dotfiles.git
+cd dotfiles
 cp .tmux.conf.local $HOME/
 
 # Clone the web UI
